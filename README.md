@@ -30,5 +30,6 @@
         - 在运行前，注意要先source一下install文件夹里的setup.sh，因为ROS1中编译后的setup文件会放在devel1文件夹下，但ROS2是放在install文件夹下
         - 对于ROS2的livox_ros_driver2，没有.launch文件了，全部变成.py来进行启动，先后在两个分别source后的终端输入`ros2 launch livox_ros_driver2 msg_MID360_launch.py`和`ros2 launch livox_ros_driver2 rviz_MID360_launch.py`，开始通过rviz查看点云
         - 如果有报错`Failed to init livox lidar sdk`，有可能就是像前面所说，网络没有给两个jeon文件进行配置
-`   - 部署FAST LIO2
+    - 部署FAST LIO2，按照[这里](https://github.com/hku-mars/FAST_LIO/tree/ROS2?tab=readme-ov-file#1.3)操作即可，需要注意的时需要先把install文件夹里的setup.sh给source一下，然后先后使用命令`ros2 launch livox_ros_driver2 msg_MID360_launch.py`将Mid360驱动起来，使用`ros2 launch fast_lio mapping.launch.py config_file:=avia.yaml`建图并可视化
+- 番外：如果git clone时用的是https，则需要token来获取权限；如果是git，则通过SSH获取。
 
