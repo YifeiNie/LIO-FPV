@@ -22,6 +22,6 @@
 - 故以后又全部转为ubuntu24.04和ROS2 jazzy，且不再改变了，尽管可预料的会出现很多问题。人不能总是留在过去，必须向前看。
 ## 改动记录（全部基于以上软硬件环境）
 ### 2024.11.08 by Nyf --环境的配置
-- 整体上参考[这里](https://www.bilibili.com/read/cv39372701/?jump_opus=1)，整体的过程非常完整，以下对其不适配ROS2的部分进行说明
+- 雷达相关驱动的配置整体上参考[这里](https://www.bilibili.com/read/cv39372701/?jump_opus=1)，整体的过程非常完整，以下对其不适配ROS2的部分进行说明
     - 在安装Livox-SDK2时，编译报错类似于`not a type name`这种找不到声明/不在作用域等这一类报错，在这里需要在源码文件里`sdk_core/comm/define.h`和`sdk_core/logger_handler/file_manager.h`两个文件里添加`#include <cstdint>`，然后编译即可通过，参考[这里](https://qiita.com/porizou1/items/f2123c16af3f86200a06)
     - 
