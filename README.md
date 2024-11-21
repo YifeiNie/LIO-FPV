@@ -32,4 +32,6 @@
         - 如果有报错`Failed to init livox lidar sdk`，有可能就是像前面所说，网络没有给两个jeon文件进行配置
     - 部署FAST LIO2，按照[这里](https://github.com/hku-mars/FAST_LIO/tree/ROS2?tab=readme-ov-file#1.3)操作即可，需要注意的时需要先把install文件夹里的setup.sh给source一下，然后先后使用命令`ros2 launch livox_ros_driver2 msg_MID360_launch.py`将Mid360驱动起来，使用`ros2 launch fast_lio mapping.launch.py config_file:=avia.yaml`建图并可视化
 - 番外：如果git clone时用的是https，则需要token来获取权限；如果是git，则通过SSH获取。
+- ### 2024.11.21 by Nyf 补充
+- 编译FAST-LIO时报错: `Cannot find source file: include/ikd-Tree/ikd_Tree.cpp`，是因为没有使用`git submodule update --init`安装ikd_Tree这个包，如果连接总是中断导致无法克隆，可以直接从[这里](https://github.com/hku-mars/ikd-Tree)下载，然后将下载后文件中的ikd-Tree文件夹拷贝到FAST-LIO源码的include文件夹中，然后再重新编译即可解决
 
