@@ -26,11 +26,11 @@
     - 在安装Livox-SDK2时，编译报错类似于`not a type name`这种找不到声明/不在作用域等这一类报错，在这里需要在源码文件里`sdk_core/comm/define.h`和`sdk_core/logger_handler/file_manager.h`两个文件里添加`#include <cstdint>`，然后编译即可通过，参考[这里](https://qiita.com/porizou1/items/f2123c16af3f86200a06)，编译完成后记得在同路径（即build文件夹）下`sudo make install`一下
     - 在安装livox_ros_driver2时，首先需要注意路径，源码必须下载到ws_livox/src下。虽然我是jazzy，但是编译仍然可以按照源码README里使用`./build.sh humble`进行编译，因为都是ROS2
         - 与ROS1不同，这里需要在两个地方都修改json文件来配置网口通信，即`...../ws_livox/src/livox_ros_driver2/config`和`ws_livox/install/livox_ros_driver2/share/livox_ros_driver2/config`两个地方的MID360_config.json文件都需要修改对应的IP
-        - 然后应该会发现编译不通过，报错缺少路径`/usr/local/lib`下的文件`liblivox_lidar_sdk _shared.so`或者其他什么，这也是和ROS1不一样，colcom build构建完成后似乎不自动添加环境变量，所以需要手动在添加：`sudo gedit ~/.bashrc`，然后在打开的文件最后一行加入`export LD_LIBRARY_PATH=/usr/local/lib`,然后`source ~/.bashrc`更新一下环境变量
-        - 在运行前，注意要先source一下install文件夹里的setup.sh，因为ROS1中编译后的setup文件会放在devel1文件夹下，但ROS2是放在install文件夹下
+        - 然后应该会发现编译不通过，报错缺少路径`/usr/local/lib`下的文件`liblivox_lidar_sdk _shared.so`或者其他什么，这也是和ROS1不一样，colcon build构建完成后似乎不自动添加环境变量，所以需要手动在添加：`sudo gedit ~/.bashrc`，然后在打开的文件最后一行加入`export LD_LIBRARY_PATH=/usr/local/lib`,然后`source ~/.bashrc`更新一下环境变量
+        - 在运行前，注意要先source一下install文件夹里的setup.sh，因为ROS1中编译后的setup文件会放在devel文件夹下，但ROS2是放在install文件夹下
         - 对于ROS2的livox_ros_driver2，没有.launch文件了，全部变成.py来进行启动，先后在两个分别source后的终端输入`ros2 launch livox_ros_driver2 msg_MID360_launch.py`和`ros2 launch livox_ros_driver2 rviz_MID360_launch.py`，开始通过rviz查看点云
         - 如果有报错`Failed to init livox lidar sdk`，有可能就是像前面所说，网络没有给两个jeon文件进行配置
-    - 部署FAST LIO2，按照[这里](https://github.com/hku-mars/FAST_LIO/tree/ROS2?tab=readme-ov-file#1.3)操作即可，需要注意的时需要先把install文件夹里的setup.sh给source一下，然后先后使用命令`ros2 launch livox_ros_driver2 msg_MID360_launch.py`将Mid360驱动起来，使用`ros2 launch fast_lio mapping.launch.py config_file:=avia.yaml`建图并可视化
+    - 部署FAST-LIO，按照[这里](https://github.com/hku-mars/FAST_LIO/tree/ROS2?tab=readme-ov-file#1.3)(即FAST-LIO的ROS2分支)操作即可，需要注意的时需要先把install文件夹里的setup.sh给source一下，然后先后使用命令`ros2 launch livox_ros_driver2 msg_MID360_launch.py`将Mid360驱动起来，使用`ros2 launch fast_lio mapping.launch.py config_file:=avia.yaml`建图并可视化
 - 番外：如果git clone时用的是https，则需要token来获取权限；如果是git，则通过SSH获取。
 - ### 2024.11.21 by Nyf 补充
 - 编译FAST-LIO时报错: `Cannot find source file: include/ikd-Tree/ikd_Tree.cpp`，是因为没有使用`git submodule update --init`安装ikd_Tree这个包，如果连接总是中断导致无法克隆，可以直接从[这里](https://github.com/hku-mars/ikd-Tree)下载，然后将下载后文件中的ikd-Tree文件夹拷贝到FAST-LIO源码的include文件夹中，然后再重新编译即可解决
